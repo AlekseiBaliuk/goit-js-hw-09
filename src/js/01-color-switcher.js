@@ -1,13 +1,21 @@
-const refs = {
-  body: document.querySelector('body'),
-  startBtn: document.querySelector('button[data-start]'),
-  stopBtn: document.querySelector('button[data-stop]'),
-};
+// const refs = {
+//   body: document.querySelector('body'),
+//   startBtn: document.querySelector('button[data-start]'),
+//   stopBtn: document.querySelector('button[data-stop]'),
+// };
 
-refs.stopBtn.disabled = true;
-let intervalID = null;
+// refs.stopBtn.disabled = true;
+// let intervalID = null;
 
 class RandomBodyColor {
+  constructor() {
+    this.intervalID = null;
+    this.body = document.querySelector('body');
+    this.startBtn = document.querySelector('button[data-start]');
+    this.stopBtn = document.querySelector('button[data-stop]');
+    this.stopBtn.disabled = true;
+  }
+
   DELAY = 1000;
 
   getRandomHexColor() {
@@ -15,25 +23,27 @@ class RandomBodyColor {
   }
 
   interval() {
-    intervalID = setInterval(() => {
-      refs.body.style.backgroundColor = this.getRandomHexColor();
+    this.intervalID = setInterval(() => {
+      this.body.style.backgroundColor = this.getRandomHexColor();
     }, this.DELAY);
   }
 
   start() {
-    refs.startBtn.addEventListener('click', () => {
+    this.startBtn.addEventListener('click', () => {
       this.interval();
-      refs.startBtn.disabled = true;
-      refs.stopBtn.disabled = false;
+      this.startBtn.disabled = true;
+      this.stopBtn.disabled = false;
     });
-    refs.stopBtn.addEventListener('click', this.stop);
+    this.stop();
   }
 
   stop() {
-    clearInterval(intervalID);
-    refs.startBtn.disabled = false;
-    refs.stopBtn.disabled = true;
-    refs.body.style.backgroundColor = '#ffffff';
+    this.stopBtn.addEventListener('click', () => {
+      clearInterval(this.intervalID);
+      this.startBtn.disabled = false;
+      this.stopBtn.disabled = true;
+      this.body.style.backgroundColor = '#ffffff';
+    });
   }
 }
 

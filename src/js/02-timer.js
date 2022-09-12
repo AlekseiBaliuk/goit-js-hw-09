@@ -63,12 +63,7 @@ const options = {
       refs.minutes.textContent = addLeadingZero(minutes);
       refs.seconds.textContent = addLeadingZero(seconds);
 
-      if (
-        refs.days.textContent === '0' &&
-        refs.hours.textContent === '00' &&
-        refs.minutes.textContent === '00' &&
-        refs.seconds.textContent === '00'
-      ) {
+      if (diff < 1000) {
         clearInterval(timerId);
       }
     };
